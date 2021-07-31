@@ -1,0 +1,33 @@
+import React from 'react'
+import {Button, InputLabel, TextField} from "@material-ui/core";
+import constants from "../constants";
+import useStyles from "../styles";
+
+function Login() {
+    const classes = useStyles()
+
+    return (
+        <div className={classes.root}>
+            <h3 className={classes.signInLabel}>
+                Sign In to Demo App
+            </h3>
+            <InputLabel className={classes.field} color="secondary">
+                User Name (Email)
+            </InputLabel>
+            <TextField className={classes.textField} variant="outlined" />
+            <InputLabel className={classes.field} color="secondary">
+                Password
+            </InputLabel>
+            <TextField className={classes.textField} variant="outlined" />
+            <Button variant="contained" color="primary" className={classes.formButton}
+                    onClick={() => window.location.href = constants.Sp}>
+                Login using IdP Service
+            </Button>
+            <Button variant="contained" color="primary">
+                Sign In
+            </Button>
+        </div>
+    );
+}
+
+export default Login;

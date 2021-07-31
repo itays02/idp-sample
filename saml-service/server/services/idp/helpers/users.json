@@ -1,0 +1,11 @@
+[
+  {
+    "uid": "1",
+    "name": "Itay Sample",
+    "email": "itay@sample.com",
+    "password": "1234",
+    "phone": "+141502094",
+    "city": "Tel Aviv",
+    "createdAt": "2018-11-10 12:27:00"
+  }
+]
