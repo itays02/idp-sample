@@ -42,7 +42,7 @@ const idp = saml.IdentityProvider({
     loginResponseTemplate:{
         context: fs.readFileSync(path.resolve(__dirname, "idp/loginResponseTemplate.xml")).toString(),
         attributes: [
-            { name: 'uid', valueTag: 'uid', nameFormat: 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic', valueXsiType: 'xs:string' },
+            { name: 'id', valueTag: 'id', nameFormat: 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic', valueXsiType: 'xs:string' },
             { name: 'name', valueTag: 'name', nameFormat: 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic', valueXsiType: 'xs:string' },
             { name: 'phone', valueTag: 'phone', nameFormat: 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic', valueXsiType: 'xs:string' },
             { name: 'city', valueTag: 'city', nameFormat: 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic', valueXsiType: 'xs:string' },

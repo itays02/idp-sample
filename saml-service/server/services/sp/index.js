@@ -1,8 +1,6 @@
-const saml = require('samlify')
 const express = require("express");
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
 
 const { idp, sp }  = require('../config')
 const router = express.Router();
@@ -23,7 +21,7 @@ router.post('/acs', async (req, res) => {
         const {extract} = await sp.parseLoginResponse(idp, 'post', {body: {SAMLResponse}});
 
         const user = {
-            id: extract.attributes['uid'],
+            id: extract.attributes['id'],
             email: extract.nameID,
             name: extract.attributes['name'],
             city: extract.attributes['city'],
@@ -50,25 +48,5 @@ router.get('/user', async (req, res) => {
         console.log(error)
     }
 });
-
-const getSamlRequest = (template, referer)=> {
-    const _id = `_${uuidv4()}`
-    const tvalue = {
-        ID: _id,
-        NameIDFormat: 'urn:oasis:names:tc:SAML:demo.demo:nameid-format:emailAddress',
-        Destination: process.env.SSOLogin,
-        Issuer: sp.entityMeta.getEntityID(),
-        IssueInstant: new Date().toISOString(),
-        EntityID: sp.entityMeta.getEntityID(),
-        AllowCreate: false,
-        AssertionConsumerServiceURL: undefined,
-        attrReferer: '123' //req.headers.referer
-    };
-    return {
-        id: _id,
-        context: saml.SamlLib.replaceTagsByValue(template, tvalue),
-    };
-}
-
 
 module.exports = router;

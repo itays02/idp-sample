@@ -42,10 +42,9 @@ const createTemplateCallback = (idp, sp, user) => template => {
         EntityID: spEntityID,
         InResponseTo: '_4606cc1f427fa981e6ffd653ee8d6972fc5ce398c4',
         StatusCode: 'urn:oasis:names:tc:SAML:2.0:status:Success',
-        attrUid: user.id,
+        attrId: user.id,
         attrName: user.name,
-        attrRole: user.role,
-        attrRoles: "14",
+        attrCity: user.city,
         attrPhone: user.phone,
         attrCreatedAt: user.createdAt.toString(),
     };
