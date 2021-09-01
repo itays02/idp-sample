@@ -31,10 +31,10 @@ router.post('/acs', async (req, res) => {
 
         const privateKey = fs.readFileSync('certs/server.key')
         const signedJwt = jwt.sign(user, {key: privateKey, passphrase: '1234'}, {algorithm: 'RS256'})
-        res.cookie('user', signedJwt)
+        res.cookie('user', signedJwt, { maxAge: 2 * 60 * 60, httpOnly: true })
         res.sendStatus(200)
     } catch (error) {
-        console.log(error)
+        res.status(400).send(error.message || error)
     }
 });
 
@@ -45,7 +45,19 @@ router.get('/user', async (req, res) => {
         const cert = fs.readFileSync('certs/server.pem')
         res.send(jwt.verify(token, cert, { algorithm: 'RS256' }))
     } catch (error) {
-        console.log(error)
+        res.status(400).send(error.message || error)
+    }
+});
+
+// parse jwt token to actual user
+router.post('/logout', async (req, res) => {
+    try {
+        // const { id, context } = idp.createLogoutRequest(sp, 'redirect', { logoutNameID: req.body.email });
+//        const { extract } = await sp.parseLogoutRequest(idp, 'redirect', { body: { SAMLRequest: context } });
+        res.clearCookie('user');
+        res.sendStatus(200)
+    } catch (error) {
+        res.status(400).send(error.message)
     }
 });
 

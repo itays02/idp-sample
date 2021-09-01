@@ -5,16 +5,11 @@ const { getUserFromJson } = require("./helpers/helper")
 const { binding } = saml.Constants.namespace
 
 const getUser = async (email, password) => {
-    try {
-        const user = await getUserFromJson(email, password)
-        if (!user) {
-            throw new Error('failed to get user')
-        } else {
-            return user
-        }
-    } catch (err) {
-        console.log('error in fetching user details', err)
-        throw new Error('error in fetching user details')
+    const user = await getUserFromJson(email, password)
+    if (!user) {
+        throw new Error('user not found')
+    } else {
+        return user
     }
 }
 

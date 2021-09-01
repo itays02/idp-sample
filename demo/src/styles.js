@@ -31,6 +31,10 @@ const useStyles = makeStyles(() => ({
         marginBottom: '15px',
         fontWeight: '500'
     },
+    logoutButton: {
+        marginTop: '10px',
+        float: 'right'
+    },
     field: {
         fontSize: '14px',
         marginTop: '10px',
@@ -48,7 +52,7 @@ const useStyles = makeStyles(() => ({
     formButton: {
         margin: '5% 0%',
         width: '100%',
-    },
+    }
 }));
 
 export default useStyles;

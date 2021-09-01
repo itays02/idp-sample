@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import { Button, TextField } from "@material-ui/core";
+import {Button, FormLabel, TextField} from "@material-ui/core";
 
 import useStyles from "./styles";
 import headerImage from "./images/header.png";
@@ -10,6 +10,7 @@ function App () {
     const classes = useStyles()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     async function redirectSaml(e) {
         e.preventDefault()
@@ -21,13 +22,13 @@ function App () {
             })
             window.location.href = response.data
         } catch (error) {
-            console.log(error);
+            error && setErrorMessage(error.response ? error.response.data : error.message)
         }
     }
 
     return (
       <div className={classes.root}>
-          <img className={classes.headerImage} src={headerImage}/>
+          <img className={classes.headerImage} src={headerImage} alt={''}/>
           <div className={classes.content}>
               <div className={classes.formDiv}>
                   <label className={classes.label}>My Account</label>
@@ -50,9 +51,10 @@ function App () {
                       />
                       <Button color="primary" className={classes.submit} type={"submit"}>Sign In</Button>
                   </form>
+                  <FormLabel error={!!errorMessage}>{errorMessage}</FormLabel>
               </div>
               <div>
-                  <img className={classes.logo} src={logo}/>
+                  <img className={classes.logo} src={logo} alt={''} />
               </div>
           </div>
       </div>

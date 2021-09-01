@@ -40,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
     form: {
         display: 'inline-block',
         position: 'relative',
-        height:'95%'
+        height:'95%',
+        marginBottom:'5px'
     },
     textField: {
         display: 'inline-block',

@@ -1,19 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { Button, FormLabel, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@material-ui/core";
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import {SP_SERVER} from "../constants";
+import { HOME_PAGE, LOGOUT_URL, ACS_URL, GET_USER_URL } from "../constants";
 
 import useStyles from "../styles";
 
 function User() {
     const classes = useStyles()
     const [user, setUser] = useState({})
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
         getUserApi()
@@ -21,14 +17,25 @@ function User() {
 
     async function getUserApi() {
         try {
-            await axios.post(`${SP_SERVER}/acs`, {
+            await axios.post(ACS_URL, {
                 SAMLResponse: window.location.search.match(/SAMLResponse=([^&]*)/)[1]
             }, { withCredentials: true })
 
-            const response = await axios.get(`${SP_SERVER}/user`,{ withCredentials: true } ) || {}
+            const response = await axios.get(GET_USER_URL,{ withCredentials: true } ) || {}
             setUser(response.data)
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            error && setErrorMessage(error.response ? error.response.data : error.message)
+        }
+    }
+
+    async function logout(){
+        try {
+            await axios.post(LOGOUT_URL, {
+                email: user.email
+            }, { withCredentials: true })
+            window.location.href = HOME_PAGE
+        } catch (error) {
+            error && setErrorMessage(error.response ? error.response.data : error.message)
         }
     }
 
@@ -65,6 +72,10 @@ function User() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Button variant="contained" color="primary" className={classes.logoutButton} onClick={logout}>
+                Logout
+            </Button>
+            <FormLabel error={!!errorMessage}>{errorMessage}</FormLabel>
         </div>
     );
 }

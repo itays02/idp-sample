@@ -1,7 +1,8 @@
 import React from 'react'
-import {Button, InputLabel, TextField} from "@material-ui/core";
+import { Button, InputLabel, TextField } from "@material-ui/core";
 
-import { SP_SERVER } from "../constants";
+import { LOGIN_URL } from "../constants";
+
 import useStyles from "../styles";
 
 function Login() {
@@ -21,7 +22,7 @@ function Login() {
             </InputLabel>
             <TextField className={classes.textField} variant="outlined" />
             <Button variant="contained" color="primary" className={classes.formButton}
-                    onClick={() => window.location.href = SP_SERVER}>
+                    onClick={() => window.location.href = LOGIN_URL }>
                 Login using IdP Service
             </Button>
             <Button variant="contained" color="primary">

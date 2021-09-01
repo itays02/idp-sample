@@ -16,9 +16,8 @@ router.post('/login',  async (req, res, next)=> {
         const {id, context} = await idp.createLoginResponse(sp, parseResult, 'post', user, createTemplateCallback(idp, sp, user));
         const originalHost = 'http://localhost:4000'
         res.send(`${originalHost}/user?SAMLResponse=${context}`)
-    } catch (err) {
-        console.log(err);
-        next(err)
+    } catch (error) {
+       res.status(400).send(error.message)
     }
 });
 
